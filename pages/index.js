@@ -34,14 +34,18 @@ const validationSchema = yup.object().shape({
 })
 
 export default function Home() {
-  const {values, 
+  const {
+    values, 
     errors, 
     touched, 
     handleBlur, 
     handleChange, 
-    handleSubmit
+    handleSubmit,
+    isSubmitting,
   } = useFormik({
-    onSubmit: () => {},
+    onSubmit: (values, form) => {
+
+    },
     validationSchema,
     initialValues: {
       email: '',
@@ -84,7 +88,7 @@ export default function Home() {
 
         <Box p={4}>
 
-          <Button width='100%' onClick={formik.handleSubmit}>Seguir</Button>
+          <Button colorScheme='blue' width='100%' onClick={handleSubmit} isLoading={isSubmitting}>Seguir</Button>
 
         </Box>
 
