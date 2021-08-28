@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react'
+import { Container, Spinner } from '@chakra-ui/react'
 import { Login, Agenda } from './../components'
 import { firebaseClient } from './../config/firebase'
-import 'firebase/auth'
-import { useEffect, useState } from 'react'
 
 
 export default function Home() {
@@ -19,8 +19,12 @@ export default function Home() {
     })
   }, [])
   if (auth.loading) {
-    return 'Loading...'
+    return (
+      <Container p={4} centerContent>
+        <Spinner />
+      </Container>
+    )
   }
-  //const authenticateUser = firebaseClient.auth().currentUser
+
   return auth.user ? <Agenda /> : <Login />
 }
