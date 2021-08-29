@@ -1,5 +1,4 @@
-//import { initializeApp } from "firebase/app";
-import firebaseClient from "firebase/app";
+import firebaseClient from 'firebase/app'
 import 'firebase/auth'
 
 const firebaseConfig = {
@@ -10,14 +9,12 @@ const firebaseConfig = {
     messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
     appId: process.env.NEXT_PUBLIC_APP_ID,
     measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
-  };
+}
 
-
-//const app = initializeApp(firebaseConfig);
-
-  
-const app = firebaseClient.apps.length ? firebaseClient.app() : firebaseClient.initializeApp(firebaseConfig)
+const app = firebaseClient.apps.length
+    ? firebaseClient.app()
+    : firebaseClient.initializeApp(firebaseConfig)
 
 export const persistenceMode = firebaseClient.auth.Auth.Persistence.LOCAL
 
-export {firebaseClient}
+export { firebaseClient }
