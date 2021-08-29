@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import axios from 'axios'
 
 import { 
   Container, 
@@ -39,7 +40,19 @@ export default function Home() {
     onSubmit: async (values, form) => {
       try {
         const user = await firebaseClient.auth().createUserWithEmailAndPassword(values.email, values.password)
-        console.log(user)
+        
+        const { data } = await axios({
+          method: 'post',
+          url: '/api/profile',
+          data: {
+              username: values.username
+          },
+          header: {
+            'Authentication': `Bearer ${user.getToken}`
+          },
+        })
+
+        console.log(data)
       } catch (error) {
         console.log('ERROR:', error)
       }
@@ -78,7 +91,7 @@ export default function Home() {
 
           <FormControl id='username' p={4} isRequired>
             <InputGroup size='lg'>
-              <InputLeftAddon children='clocker.work/' />
+              <InputLeftAddon children='clocker.com/' />
               <Input type='username' value={values.username} onChange={handleChange} onBlur={handleBlur}/>
             </InputGroup>
             {touched.username && <FormHelperText textColor='#e74c3c'>{errors.username}</FormHelperText>}
