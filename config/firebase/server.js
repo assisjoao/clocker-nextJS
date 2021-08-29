@@ -42,3 +42,12 @@ const app = firebase.apps.length
     })
 
 export { firebaseServer }
+
+// import admin from "firebase-admin"
+
+
+// admin.initializeApp({
+//   credential: admin.credential.cert({
+//    type: process.env.TYPE,
+//    })
+// });
