@@ -18,9 +18,7 @@ import {
  } from '@chakra-ui/react'
 
 
-import { Agenda, Logo, useAuth } from '../components'
-import { redirect } from 'next/dist/server/api-utils'
-
+import { Logo, useAuth } from '../components'
 
 const validationSchema = yup.object().shape({
   email: yup.string().email('E-mail inválido').required('Preenchimento obrigatório'),
