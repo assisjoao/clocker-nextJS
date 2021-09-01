@@ -9,13 +9,13 @@ import { Box, Button, Container, IconButton } from '@chakra-ui/react'
 
 import { useAuth, Logo, formatDate } from './../components'
 
-const getAgenda = ({ token, when }) => axios({
+const getAgenda = ({ when }) => axios({
   method: 'get',
   url: '/api/agenda',
   params: { when },
-  headers: {
-    Authorization: `Bearer ${token}`
-  }
+  // headers: {
+  //   Authorization: `Bearer ${token}`
+  // }
 })
 
 const Header = ({ children }) => (
@@ -28,14 +28,18 @@ export default function Agenda() {
   const router = useRouter()
   const [auth, { logout }] = useAuth()
   const [when, setWhen] = useState(() => new Date())
-  // const [data, { loading, status, error }, fetch] = useFetch(() => getAgenda(when))
+  const [data, { loading, status, error }, fetch] = useFetch(getAgenda, { lazy: true })
 
-  const addDay = () => setWhen(addDays(when, 1))
-  const removeDay = () => setWhen(subDays(when, 1))
+  const addDay = () => setWhen(prevState => addDays(prevState, 1))
+  const removeDay = () => setWhen(prevState => subDays(prevState, 1))
 
-  // useEffect(() => {
-  //     !auth.user && router.push('/')
-  // }, [auth.user])
+  useEffect(() => {
+    !auth.user && router.push('/')
+  }, [auth.user])
+
+  useEffect(() => {
+    fetch(when)
+  }, [when])
 
     return (
       <Container>
