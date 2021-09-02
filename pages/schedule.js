@@ -7,21 +7,13 @@ import { addDays, subDays } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, IconButton } from '@chakra-ui/react'
 
-import { getToken } from '../config/firebase/client'
 import { useAuth, Logo, formatDate } from './../components'
 
-const getAgenda = async ( when ) => {
-  const token = await getToken()
-
-  return axios({
+const getSchedule = async (when) => axios({
     method: 'get',
-    url: '/api/agenda',
-    params: { when },
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+    url: '/api/schedule',
+    params: { when, username: window.location.pathname },
   })
-}
 
 const Header = ({ children }) => (
   <Box p={4} display="flex" alignItems="center" justifyContent="space-between">
@@ -33,7 +25,7 @@ export default function Agenda() {
   const router = useRouter()
   const [auth, { logout }] = useAuth()
   const [when, setWhen] = useState(() => new Date())
-  const [data, { loading, status, error }, fetch] = useFetch(getAgenda, { lazy: true })
+  const [data, { loading, status, error }, fetch] = useFetch(getSchedule, { lazy: true })
 
   const addDay = () => setWhen(prevState => addDays(prevState, 1))
   const removeDay = () => setWhen(prevState => subDays(prevState, 1))
