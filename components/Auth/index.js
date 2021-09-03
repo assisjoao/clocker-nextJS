@@ -40,6 +40,8 @@ export const signup = async ({ email, password, username }) => {
     }
 }
 
+
+
 export const useAuth = () => {
     const [auth] = useContext(AuthContext)
     return [auth, { login, logout, signup }]
